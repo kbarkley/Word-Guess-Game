@@ -3,18 +3,18 @@
 
 // The array of words for our match game.
 var words = [
-    "Ryu"
-    ,"E.Honda"
-    ,"Blanka"
-    ,"Guile"
-    ,"Balrog"
-    ,"Vega"
-    ,"Ken"
-    ,"Chun-Li"
-    ,"Zangief"
-    ,"Dhalsim"
-    ,"Sagat"
-    ,"M.Bison"
+     {name:"Ryu", image: "https://vignette.wikia.nocookie.net/streetfighter/images/c/cb/Ryu-hdstance.gif/revision/latest/scale-to-width-down/248?cb=20100718231721"}
+    ,{name: "E.Honda", image: "https://vignette.wikia.nocookie.net/streetfighter/images/6/6c/Ehonda-hdstance.gif/revision/latest?cb=20100718230844"}
+    ,{name: "Blanka", image: "https://vignette.wikia.nocookie.net/streetfighter/images/a/af/Blanka-hdstance.gif/revision/latest?cb=20100718230113"}
+    ,{name: "Guile", image: "https://vignette.wikia.nocookie.net/streetfighter/images/0/01/Guile-hdstance.gif/revision/latest?cb=20100718231136"}
+    ,{name: "Balrog", image: "https://vignette.wikia.nocookie.net/streetfighter/images/9/90/Balrog-hdstance.gif/revision/20120903210339"}
+    ,{name: "Vega", image: "https://vignette.wikia.nocookie.net/streetfighter/images/6/60/Vega-hdstance.gif/revision/latest?cb=20100718232201"}
+    ,{name: "Ken", image: "https://vignette.wikia.nocookie.net/streetfighter/images/4/44/Ken-hdstance.gif/revision/latest?cb=20100718231338"}
+    ,{name: "Chun-Li", image: "https://vignette.wikia.nocookie.net/streetfighter/images/0/05/Chunli-hdstance.gif/revision/latest?cb=20100718230405"}
+    ,{name: "Zangief", image: "https://vignette.wikia.nocookie.net/streetfighter/images/8/8d/Zangief-hdstance.gif/revision/latest?cb=20100718232319"}
+    ,{name: "Dhalsim", image: "https://vignette.wikia.nocookie.net/streetfighter/images/d/d9/Dhalsim-hdstance.gif/revision/latest?cb=20100718230703"}
+    ,{name: "Sagat", image: "https://vignette.wikia.nocookie.net/streetfighter/images/8/8c/Sagat-hdstance.gif/revision/latest?cb=20100718231908"}
+    ,{name: "M.Bison", image: "https://vignette.wikia.nocookie.net/streetfighter/images/9/97/Super_Street_Fighter_II_Turbo_HD_Remix.gif/revision/latest?cb=20100518093457"}
 ]  
 // We start the game with a 0 Wins.
 var correctGuesses = 0;
@@ -27,7 +27,8 @@ var inputHist = [""];
 // Variable to hold the index of current word.
 var wordIndex = 0;
 
-var word = words[wordIndex];
+var word = words[wordIndex].name;
+var image = words[wordIndex].image;
 
 var alreadyUsed = "";
 
@@ -92,6 +93,11 @@ function updateRemainingGuesses() {
     document.querySelector("#remainingGuesses").innerHTML = "Number of Guesses Remaining: " + (maxWrongGuesses - wrongGuesses);
 }
 
+// Function that updates the image...
+function updateImage() {
+    document.querySelector("#image").src = image;
+}
+
 // MAIN PROCESS
 // ==============================================================================
 
@@ -133,8 +139,10 @@ document.onkeyup = function(event) {
         inputHist = trackInputHist(userInput,inputs);
     }
     if (correctGuesses == currWord.length) {
+        updateImage();
         wordIndex++;
-        word = words[wordIndex];
+        word = words[wordIndex].name;
+        image = words[wordIndex].image;
         tempWord = makeTempWord(word);
         currWord = makeCurrWord(word);
         wins++;
@@ -145,13 +153,15 @@ document.onkeyup = function(event) {
         inputHist = [];
         updateAlreadyUsed();
         updateRemainingGuesses();
+        console.log(image);
         renderWord();
         updateWins();
     }
 
     if (wrongGuesses == maxWrongGuesses) {
         wordIndex++;
-        word = words[wordIndex];
+        word = words[wordIndex].name;
+        image = words[wordIndex].image;
         tempWord = makeTempWord(word);
         currWord = makeCurrWord(word);
         losses++;
